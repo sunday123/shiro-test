@@ -1,0 +1,39 @@
+Configuration:
+  # 指定日志打印级别，日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL
+  status: DEBUG
+  # 自动重新配置的监测间隔时间，单位：秒
+  monitorInterval: 10
+  # 公共参数配置，引入到后面配置中，以List的方式配置
+  Properties:
+    Property:
+      # 日志格式
+      - name: log_pattern
+        value: "[%t] %-5level [%logger{50}:%L] - %msg%n"
+
+  Appenders:
+    # 日志打印到控制台
+    Console:
+      # Appender的名字可以随意指定
+      name: CONSOLE
+      # 指定日志级别 控制台只输出level及以上级别的信息，其他的直接拒绝
+      # onMatch：和level级别匹配， onMismatch：和 level级别不匹配
+      ThresholdFilter:
+        level: info
+        onMatch: ACCEPT
+        onMismatch: DENY
+      # 输出日志格式配置
+      PatternLayout:
+        pattern: ${log_pattern}
+        charset: UTF-8
+
+
+
+  Loggers:
+    Logger:
+      name: platform
+      level: INFO
+    Root:
+      level: info
+      includeLocation: true
+      AppenderRef:
+        - ref: CONSOLE
