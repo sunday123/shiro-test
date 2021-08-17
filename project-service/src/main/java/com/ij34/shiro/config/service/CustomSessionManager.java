@@ -13,8 +13,8 @@ import java.io.Serializable;
  * @Date 2021/8/15
  * @Created by www.ij34.com
  */
-public class CustomSessionManager  extends DefaultWebSessionManager {
-    public static final String AUTHORIZATION="token";
+public class CustomSessionManager extends DefaultWebSessionManager {
+    private static final String AUTHORIZATION = "token";
 
     public CustomSessionManager() {
         super();
@@ -23,15 +23,15 @@ public class CustomSessionManager  extends DefaultWebSessionManager {
     @Override
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
         //获取sessionId
-        String sessionId= WebUtils.toHttp(request).getHeader(AUTHORIZATION);
-        if (sessionId!=null){
+        String sessionId = WebUtils.toHttp(request).getHeader(AUTHORIZATION);
+        if (sessionId != null) {
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE,
                     ShiroHttpServletRequest.COOKIE_SESSION_ID_SOURCE);
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, sessionId);
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
             return sessionId;
-        }else {
-            return super.getSessionId(request,response);
+        } else {
+            return super.getSessionId(request, response);
         }
     }
 }

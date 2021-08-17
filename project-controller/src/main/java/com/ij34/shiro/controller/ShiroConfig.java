@@ -3,6 +3,7 @@ package com.ij34.shiro.controller;
 import com.ij34.shiro.config.service.CustomAuthorizationFilter;
 import com.ij34.shiro.config.service.CustomRealm;
 import com.ij34.shiro.config.service.CustomSessionManager;
+import com.ij34.shiro.model.Permission;
 import com.ij34.shiro.service.IPermissionService;
 import com.ij34.shiro.service.ShiroService;
 import org.apache.shiro.cache.CacheManager;
@@ -37,11 +38,10 @@ import java.util.Map;
 public class ShiroConfig {
 
 
-
-    Logger log = LoggerFactory.getLogger(getClass());
+    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    ShiroService shiroService;
+    private ShiroService shiroService;
 
     @Bean
     public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
@@ -65,11 +65,11 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/pub/**", "anon");
         filterChainDefinitionMap.put("/swagger-ui/**", "anon");
         //放行Swagger2页面，需要放行这些
-        filterChainDefinitionMap.put("/swagger-ui/index.html","anon");
-        filterChainDefinitionMap.put("/swagger/**","anon");
+        filterChainDefinitionMap.put("/swagger-ui/index.html", "anon");
+        filterChainDefinitionMap.put("/swagger/**", "anon");
         filterChainDefinitionMap.put("/webjars/**", "anon");
-        filterChainDefinitionMap.put("/swagger-resources/**","anon");
-        filterChainDefinitionMap.put("/v3/**","anon");
+        filterChainDefinitionMap.put("/swagger-resources/**", "anon");
+        filterChainDefinitionMap.put("/v3/**", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");
 
         //登录用户才可以访问
@@ -80,9 +80,9 @@ public class ShiroConfig {
         //有编辑权限才能访问
 //        filterChainDefinitionMap.put("/article/update", "perms[article_update]");
 //        filterChainDefinitionMap.put("/article/add", "perms[article_add]");
-        shiroService.getAllPermission().forEach(permission -> {
-            filterChainDefinitionMap.put(permission.getUrl(), "perms["+permission.getName()+"]");
-        });
+        for (Permission permission : shiroService.getAllPermission()) {
+            filterChainDefinitionMap.put(permission.getUrl(), "perms[" + permission.getName() + "]");
+        }
 
 
         //authc：url必须通过认证才可以访问
@@ -92,6 +92,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }
+
     @Resource
     CustomRealm customRealm;
 
@@ -104,7 +105,7 @@ public class ShiroConfig {
         securityManager.setCacheManager(cacheManager());
 
 
-        securityManager.setRealm( customRealm);
+        securityManager.setRealm(customRealm);
         return securityManager;
     }
 
@@ -139,8 +140,8 @@ public class ShiroConfig {
     }
 
     @Value("${redis.address}")
-    String host;
+    private String host;
     @Value("${redis.database}")
-    int database;
+    private int database;
 
 }

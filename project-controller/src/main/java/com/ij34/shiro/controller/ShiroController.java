@@ -24,25 +24,26 @@ import java.util.Map;
 @RestController
 @RequestMapping
 public class ShiroController {
-    Logger log = LoggerFactory.getLogger(getClass());
+    private Logger log = LoggerFactory.getLogger(getClass());
 
     @ApiOperation(value = "pub/loginPage登录界面")
     @GetMapping(value = "/pub/loginPage")
-    public ServerResponse loginPage( ){
+    public ServerResponse loginPage() {
         return ServerResponse.buildSuccess("重新登录！");
     }
+
     @ApiOperation(value = "pub/login登录接口")
     @PostMapping(value = "/pub/login")
-    public ServerResponse login( Users user){
+    public ServerResponse login(Users user) {
         Subject subject = SecurityUtils.getSubject();
         try {
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUsername(), user.getPassword());
             subject.login(usernamePasswordToken);
-            Map<String,Object> info=new HashMap<>();
-            info.put("msg","登录成功");
-            info.put("session_id",subject.getSession().getId());
+            Map<String, Object> info = new HashMap<>();
+            info.put("msg", "登录成功");
+            info.put("session_id", subject.getSession().getId());
             return ServerResponse.buildSuccess(info);
-        }catch (Exception e){
+        } catch (Exception e) {
             log.error(e.getMessage());
             return ServerResponse.buildError("错误账号密码");
         }
@@ -51,43 +52,43 @@ public class ShiroController {
 
     @ApiOperation(value = "pub/index")
     @GetMapping(value = "/pub/index")
-    public ServerResponse index(){
+    public ServerResponse index() {
         return ServerResponse.buildSuccess("index success");
     }
 
     @ApiOperation(value = "pub/noPermit")
     @GetMapping(value = "/pub/noPermit")
-    public ServerResponse noPermit(){
+    public ServerResponse noPermit() {
         return ServerResponse.buildSuccess("没有权限");
     }
 
     @ApiOperation(value = "article/update")
     @GetMapping(value = "/article/update")
-    public ServerResponse update(){
+    public ServerResponse update() {
         return ServerResponse.buildSuccess("成功article update");
     }
 
     @ApiOperation(value = "article/add")
     @GetMapping(value = "/article/add")
-    public ServerResponse add(){
+    public ServerResponse add() {
         return ServerResponse.buildSuccess("成功article add");
     }
 
     @ApiOperation(value = "/admin/test")
     @GetMapping(value = "/admin/test")
-    public ServerResponse adminTest(){
+    public ServerResponse adminTest() {
         return ServerResponse.buildSuccess("成功admin test");
     }
 
     @ApiOperation(value = "user/test")
     @GetMapping(value = "/user/test")
-    public ServerResponse userTest(){
+    public ServerResponse userTest() {
         return ServerResponse.buildSuccess("成功user test");
     }
 
     @ApiOperation(value = "authc/test")
     @GetMapping(value = "/authc/test")
-    public ServerResponse authcTest(){
+    public ServerResponse authcTest() {
         return ServerResponse.buildSuccess("成功authc test");
     }
 

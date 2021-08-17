@@ -7,14 +7,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 @ControllerAdvice
 public class GlobalException {
-    Logger logger = LoggerFactory.getLogger(getClass());
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     public ServerResponse handle(Exception ex) {
-        logger.info("[ 全局异常 ] ===============》 {}", ex);
+        logger.info("[ 全局异常 ] ===============》{0}", ex);
         if (ex instanceof CustomException) {
             CustomException customException = (CustomException) ex;
             return ServerResponse.buildError(customException.getCode(), customException.getMsg());

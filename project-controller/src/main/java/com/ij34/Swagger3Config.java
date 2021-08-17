@@ -1,15 +1,6 @@
 package com.ij34;
 
 
-/**
- * <p>
- *http://localhost:8080/swagger-ui/index.html
- * </p >
- *
- * @author lin
- * @since 2021-05-30
- */
-
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

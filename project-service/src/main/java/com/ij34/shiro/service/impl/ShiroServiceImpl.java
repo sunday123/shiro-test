@@ -9,17 +9,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @Description ShiroServiceImpl
- * @Date 2021/8/15
- * @Created by www.ij34.com
+ * description: ShiroServiceImpl
+ * date: 2021/8/15
+ * author: by www.ij34.com
  */
 @Service
 public class ShiroServiceImpl implements ShiroService {
 
 
-
     @Autowired
-    IPermissionService permissionService;
+    private IPermissionService permissionService;
 
     @Override
     public List<Permission> getAllPermission() {
